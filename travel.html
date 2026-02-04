@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Travelase Tours | Tours & Travels</title>
+  <meta name="description" content="Travelase Tours – Your trusted tour & travel agency. Explore packages, book trips, and get 24/7 support." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;        /* slate-900 */
+      --card: #111827ee;    /* gray-900 with alpha */
+      --text: #e5e7eb;      /* gray-200 */
+      --muted: #94a3b8;     /* slate-400 */
+      --brand: #22c55e;     /* green-500 */
+      --brand-2: #60a5fa;   /* blue-400 */
+      --accent: #f59e0b;    /* amber-500 */
+      --danger: #ef4444;    /* red-500 */
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(34,197,94,.15), transparent 60%),
+                  radial-gradient(1000px 500px at 10% -20%, rgba(96,165,250,.15), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(15,23,42,.6);
+      border-bottom: 1px solid rgba(148,163,184,.15);
+    }
+    .nav {
+      max-width: 1200px; margin: 0 auto; padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:700; }
+    .logo {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      display:grid; place-items:center; color:#0b1220; font-weight:800;
+      box-shadow: var(--shadow);
+    }
+    .menu { display:flex; gap: 22px; align-items:center; }
+    .menu a { color: var(--muted); font-weight: 500; }
+    .menu a:hover { color: #fff; }
+    .cta-btn {
+      padding: 10px 16px; border-radius: 999px; font-weight: 600;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color:#0b1220; border:none; cursor:pointer; box-shadow: var(--shadow);
+    }
+    .hamb { display:none; background:transparent; border:none; color:var(--text); font-size:26px; }
+    @media (max-width: 860px){
+      .menu { display:none; }
+      .hamb { display:block; }
+    }
+    /* Mobile drawer */
+    .drawer { position: fixed; inset: 0 0 0 auto; width: 80%; max-width: 320px; background: #0b1220; transform: translateX(100%); transition: .3s ease; box-shadow: var(--shadow); z-index: 60; }
+    .drawer.open { transform: translateX(0); }
+    .drawer .links { display:flex; flex-direction:column; gap: 18px; padding: 24px; }
+    .drawer a { color: var(--muted); font-weight:600; font-size: 18px; }
+
+    /* Hero */
+    .hero { max-width: 1200px; margin: 0 auto; padding: 60px 20px 30px; display:grid; grid-template-columns: 1.1fr .9fr; gap: 32px; align-items:center; }
+    .hero h1 { font-size: clamp(28px, 5vw, 46px); line-height: 1.1; margin: 0 0 14px; }
+    .hero p { color: var(--muted); margin: 0 0 20px; }
+    .hero .actions { display:flex; gap:12px; flex-wrap:wrap; }
+    .btn {
+      padding: 12px 18px; border-radius: 14px; border: 1px solid rgba(148,163,184,.2);
+      background: #0b1220; color: #fff; font-weight: 600; cursor: pointer;
+    }
+    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color:#0b1220; border: none; }
+    .hero-card {
+      border-radius: var(--radius); overflow:hidden; border:1px solid rgba(148,163,184,.15);
+      background: linear-gradient(180deg, rgba(17,24,39,.8), rgba(2,6,23,.8)), url('https://images.unsplash.com/photo-1526779259212-939e64788e3c?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;
+      min-height: 380px; position: relative; box-shadow: var(--shadow);
+    }
+    .badge { position:absolute; top:16px; left:16px; background:#0b1220b3; padding:8px 12px; border-radius:999px; border:1px solid rgba(148,163,184,.2); font-weight:700; }
+
+    /* Sections */
+    section { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .grid { display:grid; gap: 18px; }
+    .cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .cols-2 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 900px){ .cols-3, .cols-2, .hero { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card); border: 1px solid rgba(148,163,184,.15); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+    .card h3 { margin: 10px 0 6px; }
+    .muted { color: var(--muted); }
+
+    /* Packages */
+    .pkg { display:flex; flex-direction: column; }
+    .pkg .price { font-weight: 800; font-size: 22px; margin-top: 8px; background: linear-gradient(135deg, var(--brand), var(--accent)); -webkit-background-clip: text; color: transparent; }
+    .pkg ul { padding-left: 18px; margin: 8px 0 0; }
+
+    /* Booking */
+    .form { display:grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
+    .form .full { grid-column: 1 / -1; }
+    label { font-size: 14px; color: var(--muted); display:block; margin-bottom:6px; }
+    input, select, textarea { width: 100%; padding: 12px 14px; border-radius: 12px; background: #0b1220; border: 1px solid rgba(148,163,184,.2); color: #fff; }
+
+    /* Gallery */
+    .gallery { display:grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .gallery img { border-radius: 14px; aspect-ratio: 4 / 3; object-fit: cover; }
+    @media (max-width: 900px){ .gallery { grid-template-columns: repeat(2, 1fr); } }
+
+    /* FAQ */
+    details { background: var(--card); border:1px solid rgba(148,163,184,.15); border-radius: 14px; padding: 14px 16px; }
+    details + details { margin-top: 10px; }
+    summary { cursor: pointer; font-weight: 600; }
+
+    /* Footer */
+    footer { border-top:1px solid rgba(148,163,184,.15); margin-top: 30px; }
+    .foot { max-width:1200px; margin:0 auto; padding: 28px 20px; display:grid; gap: 16px; grid-template-columns: 1fr auto; align-items:center; }
+    .social { display:flex; gap: 10px; }
+    .chip { border:1px solid rgba(148,163,184,.2); padding: 6px 10px; border-radius: 999px; color: var(--muted); }
+
+    /* Utility */
+    .section-title { font-size: clamp(22px, 3.6vw, 34px); margin: 0 0 6px; }
+    .section-sub { color: var(--muted); margin: 0 0 16px; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo">T</div>
+        <div>
+          <div style="font-weight:800; line-height: 1;">Travelase Tours</div>
+          <div style="font-size:12px; color:var(--muted);">Tours & Travels</div>
+        </div>
+      </div>
+      <div class="menu">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#packages">Packages</a>
+        <a href="#booking">Booking</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+        <a href="#faq">FAQ</a>
+        <button class="cta-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+      </div>
+      <button class="hamb" aria-label="Open menu" id="openMenu">☰</button>
+    </nav>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <aside class="drawer" id="drawer">
+    <div class="links">
+      <a href="#home" onclick="toggleDrawer(false)">Home</a>
+      <a href="#services" onclick="toggleDrawer(false)">Services</a>
+      <a href="#packages" onclick="toggleDrawer(false)">Packages</a>
+      <a href="#booking" onclick="toggleDrawer(false)">Booking</a>
+      <a href="#gallery" onclick="toggleDrawer(false)">Gallery</a>
+      <a href="#contact" onclick="toggleDrawer(false)">Contact</a>
+      <a href="#faq" onclick="toggleDrawer(false)">FAQ</a>
+      <button class="cta-btn" onclick="toggleDrawer(false); document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+    </div>
+  </aside>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div>
+      <h1>Explore the world with <span style="background:linear-gradient(135deg,var(--brand),var(--brand-2));-webkit-background-clip:text;color:transparent">Travelase</span></h1>
+      <p>We craft hassle‑free holidays, custom tours, and budget‑friendly travel for families, students, and businesses. 24/7 support, verified partners, and flexible plans.</p>
+      <div class="actions">
+        <a class="btn primary" href="#packages">View Packages</a>
+        <a class="btn" href="#booking">Quick Booking</a>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <span class="chip">✈️ Flight + Hotel</span>
+        <span class="chip">🚌 Group Tours</span>
+        <span class="chip">🛂 Visa Assistance</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="badge">Best Price Guarantee</div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">Everything you need for a perfect trip.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <div style="font-size:28px">🗺️</div>
+        <h3>Custom Tour Planning</h3>
+        <p class="muted">Tailor‑made itineraries for solo, family, corporate & student groups.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:28px">✈️</div>
+        <h3>Flights & Hotels</h3>
+        <p class="muted">Best deals from verified partners with 24/7 support & rebooking help.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:28px">🛂</div>
+        <h3>Visa & Insurance</h3>
+        <p class="muted">Hassle‑free visa guidance and travel insurance for peace of mind.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages -->
+  <section id="packages">
+    <h2 class="section-title">Popular Packages</h2>
+    <p class="section-sub">Ready‑to‑book tours with transfers, stays, and guided sightseeing.</p>
+    <div class="grid cols-3">
+      <article class="card pkg">
+        <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1400&auto=format&fit=crop" alt="Goa Beach" />
+        <h3>Goa Getaway – 4D/3N</h3>
+        <div class="muted">Beach resort • Airport pickup • North & South Goa tour</div>
+        <div class="price">₹999 / person</div>
+        <ul>
+          <li>3‑star stay with breakfast</li>
+          <li>Private transfers</li>
+          <li>Water sports add‑on</li>
+        </ul>
+        <div style="margin-top:12px; display:flex; gap:10px;">
+          <a class="btn primary" href="#booking" onclick="prefill('Goa Getaway – 4D/3N')">Book</a>
+          <button class="btn" onclick="quickInfo('Goa Getaway – 4D/3N')">Details</button>
+        </div>
+      </article>
+      <article class="card pkg">
+        <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1400&auto=format&fit=crop" alt="Kashmir" />
+        <h3>Kashmir Delight – 6D/5N</h3>
+        <div class="muted">Srinagar • Gulmarg • Pahalgam • Houseboat</div>
+        <div class="price">₹2999 / person</div>
+        <ul>
+          <li>Daily breakfast & dinner</li>
+          <li>Shikara ride</li>
+          <li>Gondola (add‑on)</li>
+        </ul>
+        <div style="margin-top:12px; display:flex; gap:10px;">
+          <a class="btn primary" href="#booking" onclick="prefill('Kashmir Delight – 6D/5N')">Book</a>
+          <button class="btn" onclick="quickInfo('Kashmir Delight – 6D/5N')">Details</button>
+        </div>
+      </article>
+      <article class="card pkg">
+        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1400&auto=format&fit=crop" alt="Bali" />
+        <h3>Bali Bliss – 5D/4N</h3>
+        <div class="muted">Ubud • Uluwatu • Nusa Penida • Temples</div>
+        <div class="price">₹999 / person</div>
+        <ul>
+          <li>4‑star stay with breakfast</li>
+          <li>Island hopping</li>
+          <li>Private car & guide</li>
+        </ul>
+        <div style="margin-top:12px; display:flex; gap:10px;">
+          <a class="btn primary" href="#booking" onclick="prefill('Bali Bliss – 5D/4N')">Book</a>
+          <button class="btn" onclick="quickInfo('Bali Bliss – 5D/4N')">Details</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section id="booking">
+    <h2 class="section-title">Quick Booking</h2>
+    <p class="section-sub">Fill the form and our agent will contact you within 10 minutes.</p>
+    <div class="card">
+      <form class="form" id="bookForm">
+        <div>
+          <label for="name">Full Name</label>
+          <input id="name" name="name" placeholder="Your name" required />
+        </div>
+        <div>
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" placeholder="98765 43210" required />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+        </div>
+        <div>
+          <label for="package">Package</label>
+          <select id="package" name="package">
+            <option value="">Select a package</option>
+            <option>Goa Getaway – 4D/3N</option>
+            <option>Kashmir Delight – 6D/5N</option>
+            <option>Bali Bliss – 5D/4N</option>
+            <option>Custom Trip</option>
+          </select>
+        </div>
+        <div>
+          <label for="start">Start Date</label>
+          <input id="start" name="start" type="date" required />
+        </div>
+        <div>
+          <label for="people">Travellers</label>
+          <input id="people" name="people" type="number" min="1" value="2" required />
+        </div>
+        <div class="full">
+          <label for="notes">Notes</label>
+          <textarea id="notes" name="notes" rows="4" placeholder="Any preferences…"></textarea>
+        </div>
+        <div class="full" style="display:flex; gap:10px; align-items:center;">
+          <input id="agree" type="checkbox" required />
+          <label for="agree">I agree to the terms & privacy policy</label>
+        </div>
+        <div class="full" style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button type="submit" class="btn primary">Submit Request</button>
+          <button type="reset" class="btn" onclick="toast('Form cleared')" type="button">Clear</button>
+        </div>
+      </form>
+      <p id="formMsg" class="muted" style="margin-top:10px;"></p>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <h2 class="section-title">Trip Moments</h2>
+    <p class="section-sub">Snapshots from our happy travellers.</p>
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Mountain" />
+      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop" alt="Beach" />
+      <img src="https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=1200&auto=format&fit=crop" alt="City" />
+      <img src="https://images.unsplash.com/photo-1526779259212-939e64788e3c?q=80&w=1200&auto=format&fit=crop" alt="Temple" />
+      <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" alt="Road" />
+      <img src="https://images.unsplash.com/photo-1500534312240-7bd6c4434f77?q=80&w=1200&auto=format&fit=crop" alt="Forest" />
+      <img src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=1200&auto=format&fit=crop" alt="Island" />
+      <img src="https://images.unsplash.com/photo-1511735111819-9a3f7709049c?q=80&w=1200&auto=format&fit=crop" alt="Desert" />
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <p class="section-sub">We’d love to help plan your next trip.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>ABHISHEK  TOUR AND TRAVELS</h3>
+        <p class="muted">123, Main Street, Your City, India</p>
+        <p>📞 <a href="tel:+918318648483">+91 8318648483</a></p>
+        <p>✉️ <a href="Email:abhishekpal370080@gmail.com"> mailto:abhishekpal370080@gmail.com</a></p>
+        <p>🕒 Mon–Sat: 9:00 AM – 8:00 PM</p>
+        <div class="social">
+          <a class="chip" href="#">Instagram</a>
+          <a class="chip" href="#">Facebook</a>
+          <a class="chip" href="#">WhatsApp</a>
+        </div>
+      </div>
+      <div class="card">
+        <iframe title="Map" src="https://www.openstreetmap.org/export/embed.html?bbox=72.77%2C18.9%2C72.89%2C19.03&layer=mapnik" style="border:0; width:100%; height:260px; border-radius:12px;"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-sub">Quick answers to common queries.</p>
+    <details>
+      <summary>Can I customize a package?</summary>
+      <p class="muted">Absolutely! Choose any package as a base and we’ll tailor hotels, transport, and activities to your budget and dates.</p>
+    </details>
+    <details>
+      <summary>Do you offer EMI or pay‑later?</summary>
+      <p class="muted">Yes, we support multiple payment options including UPI, cards, and partner pay‑later plans (subject to approval).</p>
+    </details>
+    <details>
+      <summary>What if my flight gets cancelled?</summary>
+      <p class="muted">Our 24/7 support team will rebook you on the next available flight and manage hotel & transfer changes.</p>
+    </details>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <div class="muted">© <span id="year"></span> Travelase Tours. All rights reserved.</div>
+      <a class="chip" href="#home">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" style="position:fixed; left:50%; transform:translateX(-50%); bottom:20px; padding:10px 14px; border-radius:12px; background:#0b1220; border:1px solid rgba(148,163,184,.3); display:none; box-shadow:var(--shadow)"></div>
+
+  <script>
+    // Mobile drawer
+    const drawer = document.getElementById('drawer');
+    const openMenu = document.getElementById('openMenu');
+    function toggleDrawer(force){
+      drawer.classList.toggle('open', force === undefined ? !drawer.classList.contains('open') : force);
+    }
+    openMenu.addEventListener('click', () => toggleDrawer());
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Booking helpers
+    function prefill(pkg){
+      document.getElementById('package').value = pkg;
+      document.getElementById('booking').scrollIntoView({behavior:'smooth'});
+      toast('Prefilled package: ' + pkg);
+    }
+    function quickInfo(pkg){
+      toast('We\'ll send details for: ' + pkg);
+    }
+
+    function toast(msg){
+      const el = document.getElementById('toast');
+      el.textContent = msg; el.style.display='block'; el.style.opacity=1;
+      setTimeout(()=>{ el.style.transition='opacity .4s'; el.style.opacity=0; }, 1800);
+      setTimeout(()=>{ el.style.display='none'; el.style.transition=''; }, 2200);
+    }
+
+    // Simple front-end validation and fake submit
+    const form = document.getElementById('bookForm');
+    const msg = document.getElementById('formMsg');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      if(!/^\+?\d[\d\s-]{8,}$/.test(data.phone)){
+        msg.textContent = 'Please enter a valid phone number.';
+        msg.style.color = 'var(--danger)';
+        return;
+      }
+
+      msg.style.color = 'var(--muted)';
+      msg.textContent = 'Submitting…';
+
+      // Simulate API call
+      setTimeout(()=>{
+        msg.style.color = 'var(--brand-2)';
+        msg.textContent = 'Thanks, ' + data.name + '! Our agent will contact you shortly.';
+        form.reset();
+      }, 900);
+    });
+  </script>
+</body>
+</html>
